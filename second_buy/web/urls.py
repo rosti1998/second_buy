@@ -1,7 +1,5 @@
-from django.urls import path, include
+from django.urls import path
 from second_buy.web.views import *
-from django.contrib.auth import views
-
 
 urlpatterns = [
     path('', Index.as_view(), name='index'),

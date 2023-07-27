@@ -1,13 +1,12 @@
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
 from django.urls import reverse_lazy
 from django.views import View
 from django.contrib.auth import views
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import FormView, DetailView, UpdateView, CreateView, ListView, DeleteView
 
 from second_buy.web.forms import ItemForm, InquiryForm, DiscussionForm, CommentForm

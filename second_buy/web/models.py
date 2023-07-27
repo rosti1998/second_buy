@@ -8,6 +8,9 @@ class Profile(models.Model):
     email = models.EmailField(max_length=255, blank=True, null=True)
     profile_photo = models.ImageField(upload_to='images/', blank=True, null=True)
 
+    def __str__(self):
+        return self.user.username
+
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -35,6 +38,9 @@ class Inquiry(models.Model):
     email_address = models.EmailField(max_length=255, blank=True, null=True)
     item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='inquiries')
 
+    def __str__(self):
+        return f'{self.username} - {self.item.name}'
+
 
 class Discussion(models.Model):
     title = models.CharField(max_length=200)
@@ -51,3 +57,6 @@ class Comment(models.Model):
     username = models.CharField(max_length=50, blank=True, null=True)
     discussion = models.ForeignKey(Discussion, on_delete=models.CASCADE, related_name='comments')
     created_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.username} - {self.discussion.title}'

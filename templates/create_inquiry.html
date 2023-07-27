@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+     <div class="container mt-4 mb-4">
+        <h1>Create Inquiry</h1>
+        <form method="post" class="my-4">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="{{ form.message.id_for_label }}">Message:</label>
+                <br>
+                {{ form.message }}
+            </div>
+            <div class="mb-3">
+                <label for="{{ form.phone_number.id_for_label }}">Phone Number:</label>
+                <br>
+                {{ form.phone_number }}
+            </div>
+            <div class="mb-3">
+                <label for="{{ form.email_address.id_for_label }}">Email Address:</label>
+                <br>
+                {{ form.email_address }}
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Inquiry</button>
+        </form>
+     </div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container mt-5">
+
+            <div class="col-md-8">
+                <h1>User Profile</h1>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        {% if profile.profile_photo %}
+                            <img src="{{ profile.profile_photo.url }}" alt="profile photo" class="img-thumbnail" width="200" height="200">
+                        {% else %}
+                            <img src="{% static "images/default/default.png" %}" alt="profile photo" class="img-thumbnail" width="200" height="200">
+                        {% endif %}
+                    </div>
+                    <div class="col-md-8">
+                        <div class="mb-3">
+                            <p class="mb-3">Username: {{ profile.user.username }}</p>
+                            {% if not profile.email and not profile.phone_number %}
+                                <p class="text-danger">In case you haven't provided an email or phone number, sellers won't be able to contact you. You can click on Edit Profile to add them.</p>
+                            {% else %}
+                                <p>Email: {{ profile.email }}</p>
+                                <p>Phone Number: {{ profile.phone_number }}</p>
+                            {% endif %}
+                        </div>
+                        <div class="mb-3">
+                            <a href="{% url 'edit profile' user_id=profile.user_id %}" class="btn btn-primary me-2">Edit Profile</a>
+                            <a href="{% url 'my items' user_id=profile.user_id %}" class="btn btn-primary me-2">My Items</a>
+                            <a href="{% url 'my discussions' user_id=profile.user_id %}" class="btn btn-primary">My Discussions</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    </div>
+{% endblock %}

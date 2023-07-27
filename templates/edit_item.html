@@ -1,0 +1,32 @@
+
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container mt-4 mb-4">
+        <h1>Edit Item</h1>
+        <form method="post" enctype="multipart/form-data" class="my-4">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="{{ form.name.id_for_label }}">Name:</label>
+                {{ form.name }}
+            </div>
+            <div class="mb-3">
+                <label for="{{ form.category.id_for_label }}">Category:</label>
+                {{ form.category }}
+            </div>
+            <div class="mb-3">
+                <label for="{{ form.description.id_for_label }}">Description:</label>
+                <br>
+                {{ form.description }}
+            </div>
+            <div class="mb-3">
+                <label for="{{ form.price.id_for_label }}">Price:</label>
+                {{ form.price }}
+            </div>
+            <div class="mb-3">
+                <label for="{{ form.item_photo.id_for_label }}">Item Photo:</label>
+                {{ form.item_photo }}
+            </div>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </form>
+    </div>
+{% endblock %}

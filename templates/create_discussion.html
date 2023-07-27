@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container mt-3 mb-3">
+        <h1>Create New Discussion</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                    <label for="{{ form.category.id_for_label }}">{{ form.category.label_tag }}</label>
+                    {{ form.category }}
+                </div>
+            <div class="mb-3">
+                    <label for="{{ form.title.id_for_label }}">{{ form.title.label_tag }}</label>
+                    {{ form.title }}
+                </div>
+            <div class="mb-3">
+                    <label for="{{ form.context.id_for_label }}">{{ form.context.label_tag }}</label>
+                <br>
+                    {{ form.context }}
+                </div>
+            <button type="submit" class="btn btn-primary">Create Discussion</button>
+        </form>
+    </div>
+{% endblock %}

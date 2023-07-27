@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container mb-3 mt-3">
+    <h1>My Discussions</h1>
+    <a href="{% url "create discussion" user_id=user_id %} " class="btn btn-primary">Create new discussion</a>
+    {% if discussions %}
+     <div class="row mt-3">
+
+        {% for discussion in discussions %}
+            <div class="row-md-4 mb-4">
+            <div class="card">
+            <div class="card-body">
+                <h1 class="card-title">{{ discussion.title }}</h1>
+                <p class="card-text">Category: {{ discussion.category }}</p>
+                <a href="{% url 'view discussion' discussion_id=discussion.pk%}" class="btn btn-primary">View Discussion</a>
+            </div>
+            </div>
+            </div>
+        {% empty %}
+            <div>No discussions found.</div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>No discussions yet</p>
+    {% endif %}
+    </div>
+{% endblock %}

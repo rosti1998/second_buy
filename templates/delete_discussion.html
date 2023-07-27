@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container mt-4 mb-4">
+        <div class="row">
+        <div class="col">
+            <h1>Confirm Deletion</h1>
+            <p>Are you sure you want to delete "{{ object.title }}"?</p>
+
+            <form method="post" class="my-4">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger mr-2">Confirm</button>
+                <a href="{% url 'view discussion' discussion_id=discussion.pk %}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+    </div>
+{% endblock %}

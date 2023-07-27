@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container mt-3 mb-3">
+        <h1>Create Item</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                    <label for="{{ form.category.id_for_label }}">{{ form.category.label_tag }}</label>
+                    {{ form.category }}
+                </div>
+            <div class="mb-3">
+                    <label for="{{ form.name.id_for_label }}">{{ form.name.label_tag }}</label>
+                    {{ form.name }}
+                </div>
+            <div class="mb-3">
+                    <label for="{{ form.description.id_for_label }}">{{ form.description.label_tag }}</label>
+                <br>
+                {{ form.description }}
+                </div>
+            <div class="mb-3">
+                    <label for="{{ form.price.id_for_label }}">{{ form.price.label_tag }}</label>
+                    {{ form.price }}
+                </div>
+            <div class="mb-3">
+                    <label for="{{ form.item_photo.id_for_label }}">{{ form.item_photo.label_tag }}</label>
+                    {{ form.item_photo }}
+                </div>
+            <input type="hidden" name="profile" value="{{ user_id }}">
+            <button type="submit" class="btn btn-primary">Create Item</button>
+        </form>
+    </div>
+{% endblock %}

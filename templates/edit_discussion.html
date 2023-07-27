@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container mt-4 mb-4">
+
+            <div class="col-md-6">
+                <h2 class="mb-3">Edit Profile</h2>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    <div class="mb-3">
+                        <label for="{{ form.category.id_for_label }}">Category:</label>
+                        {{ form.category }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ form.title.id_for_label }}">Title:</label>
+                        {{ form.title }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ form.context.id_for_label }}">Context:</label>
+                        <br>
+                        {{ form.context }}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container" >
+        <div class="row">
+            <div class="col-md-8 mx-auto mt-5">
+                <h2 class="mb-3">{{ discussion.title }}</h2>
+                <p class="mb-3">Category: {{ discussion.category }}</p>
+                <p>{{ discussion.context }}</p>
+
+                <div class="d mb-3">
+                {% if isOwner %}
+
+                        <a href="{% url 'edit discussion' discussion_id=discussion.pk %}" class="btn btn-primary ">Edit</a>
+                        <a href="{% url 'delete discussion' pk=discussion.pk %}" class="btn btn-danger">Delete</a>
+
+                {% endif %}
+                {% if user.id %}
+                <a href="{% url 'comment' user_id=user.pk discussion_id=discussion.pk %}" class="btn btn-success me-2">Comment</a>
+                {% endif %}
+                </div>
+                <h1 class="mb-3">Comments</h1>
+                {% if comments %}
+                    {% for comment in comments %}
+                        <div class="card mb-3">
+                            <div class="card-header bg-light">
+                                <p class="mb-0">{{ comment.username }}</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    {{ comment.message }}
+                                </div>
+                                <p class="text-muted small">{{ comment.created_on }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No Comments</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

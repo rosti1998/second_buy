@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container mt-4 mb-4">
+            <h1>Item Detail</h1>
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <img src="{{ item.item_photo.url }}" alt="{{ item.name }}" class="img-fluid">
+                </div>
+                <div class="col-md-8">
+                    <p>Name: {{ item.name }}</p>
+                    <p>Category: {{ item.category }}</p>
+                    <p>Description: {{ item.description }}</p>
+                    <p>Price: ${{ item.price }}</p>
+                    {% if isOwner %}
+                    <a href="{% url 'edit item' item_id=item.pk%}" class="btn btn-primary">Edit</a>
+                    <a href="{% url 'delete item' pk=item.pk%}" class="btn btn-danger">Delete</a>
+                    {% else %}
+                        {% if user.id %}
+                    <a href="{% url 'send inquiry' user_id=user.pk item_id=item.pk %}" class="btn btn-primary">Send Inquiry</a>
+                            {% endif %}
+                    {% endif %}
+                </div>
+
+            </div>
+
+                    <div class="container mt-4 mb-4">
+            {% if isOwner %}
+            <h1>Inquiries</h1>
+            {% for inquiry in inquiries %}
+            <div class="row inquiry-card">
+                <div class="col-md-12">
+                    <p>Username: {{ inquiry.username }}</p>
+                    <p>Message: {{ inquiry.message }}</p>
+                    <p>Phone Number: {{ inquiry.phone_number }}</p>
+                    <p>Email Address: {{ inquiry.email_address }}</p>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+        </div>
+{% endblock %}

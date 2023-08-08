@@ -36,8 +36,16 @@ class Index(View):
     template_name = 'index.html'
 
     def get(self, request):
+        # Retrieve the latest items and discussions for display
+        latest_items = Item.objects.all()[:3]  # Change this to your desired limit
+        latest_discussions = Discussion.objects.all()[:3]  # Change this to your desired limit
 
-        return render(request, self.template_name, {"user": request.user})
+        context = {
+            'latest_items': latest_items,
+            'latest_discussions': latest_discussions,
+        }
+
+        return render(request, self.template_name, context)
 
 
 class Login(views.LoginView):

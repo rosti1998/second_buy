@@ -4,7 +4,51 @@
 
 {% endblock %}
 
+
 {% block content %}
-    <h2>Welcome to the Home Page!</h2>
-    <p>This is the content of the home page.</p>
+    <div class="jumbotron jumbotron-fluid bg-primary text-light text-center py-5">
+        <div class="container">
+            <h1 class="display-4">Welcome to Second-Buy</h1>
+            <p class="lead">Find great items and engage in discussions with our community!</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Latest Items</h2>
+                <div class="row">
+        {% for item in latest_items %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ item.item_photo.url }}" class="card-img-top" alt="{{ item.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ item.name }}</h5>
+                        <p class="card-text">{{ item.description }}</p>
+                        <p class="card-text">${{ item.price }}</p>
+                        <a href="{% url 'view item' item_id=item.pk %}" class="btn btn-primary">View Item</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+            </div>
+            <div class="col-md-6">
+                <h2>Join the Discussions</h2>
+                <ul class="list-unstyled">
+                    {% for discussion in latest_discussions %}
+                        <li class="mb-4">
+                            <h5>{{ discussion.title }}</h5>
+                            <p>Category: {{ discussion.category }}</p>
+                            <p>{{ discussion.context|truncatechars:150 }}</p>
+                            <a href="{% url 'view discussion' discussion_id=discussion.pk %}" class="btn btn-primary">View Discussion</a>
+                        </li>
+                    {% empty %}
+                        <li>No discussions available.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    </div>
 {% endblock %}

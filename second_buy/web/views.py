@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
+from django.http import Http404
 from django.urls import reverse_lazy
 from django.views import View
 from django.contrib.auth import views
@@ -53,12 +54,15 @@ class Register(FormView):
     success_url = reverse_lazy('login')  # Replace 'login' with the name of your login URL pattern
 
     def form_valid(self, form):
-        user = form.save()
+        try:
+            user = form.save()
 
-        profile = Profile.objects.create(user=user)
-        profile.save()
+            profile = Profile.objects.create(user=user)
+            profile.save()
 
-        return super().form_valid(form)
+            return super().form_valid(form)
+        except Exception as e:
+            return render(self.request, 'error.html', {'error_message': str(e)})
 
 
 class ViewProfile(UserIsOwnerMixin, DetailView):
@@ -66,9 +70,15 @@ class ViewProfile(UserIsOwnerMixin, DetailView):
     template_name = 'profile/profile_view.html'
     context_object_name = 'profile'
 
+    def test_func(self):
+        return self.request.user.pk == self.kwargs['user_id']
+
     def get_object(self, queryset=None):
-        # Retrieve the user object based on the 'pk' parameter in the URL
-        return get_object_or_404(Profile, user_id=self.kwargs['user_id'])
+        try:
+            return get_object_or_404(Profile, user_id=self.kwargs['user_id'])
+        except Http404:
+            # Handle Http404 exception here
+            raise Http404("Profile not found")
 
 
 class EditProfile(UserIsOwnerMixin, UpdateView):
@@ -76,9 +86,16 @@ class EditProfile(UserIsOwnerMixin, UpdateView):
     fields = ['phone_number', 'email', 'profile_photo']
     template_name = 'profile/edit_profile.html'
 
+    def test_func(self):
+        return self.request.user.pk == self.kwargs['user_id']
+
     def get_object(self, queryset=None):
-        user_id = self.kwargs['user_id']
-        return get_object_or_404(Profile, user_id=user_id)
+        try:
+            user_id = self.kwargs['user_id']
+            return get_object_or_404(Profile, user_id=user_id)
+        except Http404:
+            # Handle Http404 exception here
+            raise Http404("Profile not found")
 
     def get_success_url(self):
         return reverse_lazy('view profile', kwargs={'user_id': self.kwargs['user_id']})
@@ -87,9 +104,16 @@ class EditProfile(UserIsOwnerMixin, UpdateView):
 class ItemsList(UserIsOwnerMixin, View):
     template_name = 'my_items.html'
 
+    def test_func(self):
+        return self.request.user.pk == self.kwargs['user_id']
+
     def get(self, request, user_id):
-        items = Item.objects.filter(profile_id=user_id)
-        return render(request, 'my_items.html', {'items': items, 'user_id': user_id})
+        try:
+            items = Item.objects.filter(profile_id=user_id)
+            return render(request, 'my_items.html', {'items': items, 'user_id': user_id})
+        except Exception as e:
+            # Handle the exception, you can log it or render an error page
+            return render(request, 'error.html', {'error_message': str(e)})
 
 
 class CreateItem(UserIsOwnerMixin, CreateView):

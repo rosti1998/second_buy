@@ -78,10 +78,10 @@ WSGI_APPLICATION = 'second_buy.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "second-buy",
+        "NAME": "second_buy",
         "USER": "postgres",
-        "PASSWORD": "admin",
-        "HOST": "127.0.0.1",
+        "PASSWORD": "postgres",
+        "HOST": "second-buy.cdt5zx7i3oqn.eu-north-1.rds.amazonaws.com",
         "PORT": "5432",
     }
 }

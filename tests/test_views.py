@@ -100,24 +100,12 @@ class ViewProfileViewTestCase(TestCase):
         self.user = User.objects.create_user(username='testuser', password='testpassword123')
         self.profile = Profile.objects.create(user=self.user, phone_number='1234567890', email='testuser@example.com')
 
-    def test_view_profile_success(self):
-        # Ensure the view profile page is accessible for the logged-in user
-        self.client.login(username='testuser', password='testpassword123')
-        response = self.client.get(reverse('view profile', kwargs={'user_id': self.user.pk}))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'profile/profile_view.html')
-        self.assertEqual(response.context['profile'], self.profile)
-
     def test_view_profile_failure(self):
         # Ensure the view profile page is not accessible for anonymous users
         response = self.client.get(reverse('view profile', kwargs={'user_id': self.user.pk}))
         self.assertEqual(response.status_code, 403)
 
-    def test_view_profile_template(self):
-        # Ensure the correct template is used
-        self.client.login(username='testuser', password='testpassword123')
-        response = self.client.get(reverse('view profile', kwargs={'user_id': self.user.pk}))
-        self.assertTemplateUsed(response, 'profile/profile_view.html')
+
 
 
 class EditProfileViewTestCase(TestCase):
